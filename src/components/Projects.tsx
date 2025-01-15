@@ -4,25 +4,25 @@ import { Badge } from './ui/badge';
 export const Projects = () => {
   const projects = [
     {
-      title: "E-Learning Platform",
-      description: "A full-stack platform built with Django and React",
+      title: "smart looks BD",
+      description: "A full-stack e-commerce built with Django ",
       image: "/placeholder.svg",
-      tags: ["React", "Django", "PostgreSQL"],
+      tags: ["html", "Django", "PostgreSQL"],
       link: "#"
     },
     {
-      title: "Task Management API",
+      title: "hospital website",
       description: "REST API built with Django REST Framework",
-      image: "/placeholder.svg",
+      image: "/portfolio/hospital.png",
       tags: ["Django", "REST", "API"],
-      link: "#"
+      link: "https://hospital-mu-livid.vercel.app"
     },
     {
-      title: "Portfolio Generator",
-      description: "Dynamic portfolio creator using React",
-      image: "/placeholder.svg",
-      tags: ["React", "Firebase"],
-      link: "#"
+      title: "Portfolio ",
+      description: "Dynamic portfolio  using React and django",
+      image: "/portfolio/portfolio.png",
+      tags: ["React", "Django"],
+      link: "https://jahidulhassanreshad.co"
     }
   ];
 

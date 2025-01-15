@@ -50,10 +50,11 @@ const Index = () => {
         
         <Projects />
         <Courses />
-        <h2 className="section-title">Testimonials</h2>
+        {/* <h2 className="section-title">What Our Clients Say</h2>
         <div className="mt-3 mb-7">
+          
           <TestimonialCarousel />
-        </div>
+        </div> */}
         <ContactMe />
       </div>
       <Footer />
