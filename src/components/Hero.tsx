@@ -1,6 +1,77 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Button } from './ui/button';
+import { motion, useAnimationControls } from 'framer-motion';
+
+const TypewriterText = ({ text }: { text: string }) => {
+  const controls = useAnimationControls();
+  const [displayedText, setDisplayedText] = useState("");
+  const [smokeParticles, setSmokeParticles] = useState<{ x: number, y: number, id: number }[]>([]);
+  const particleRef = useRef(0);
+
+  useEffect(() => {
+    let currentIndex = 0;
+    const interval = setInterval(() => {
+      if (currentIndex <= text.length) {
+        setDisplayedText(text.slice(0, currentIndex));
+        if (currentIndex > 0) {
+          // Add new smoke particle
+          setSmokeParticles(prev => [...prev, {
+            x: Math.random() * 20 - 10,
+            y: Math.random() * 20 - 10,
+            id: particleRef.current++
+          }]);
+          // Remove old particles
+          setTimeout(() => {
+            setSmokeParticles(prev => prev.slice(1));
+          }, 1000);
+        }
+        currentIndex++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 150);
+
+    return () => clearInterval(interval);
+  }, [text]);
+
+  return (
+    <div className="relative inline-block">
+      {smokeParticles.map((particle) => (
+        <motion.div
+          key={particle.id}
+          className="absolute inline-block w-2 h-2 bg-primary/20 rounded-full"
+          initial={{ 
+            opacity: 0.8,
+            scale: 1,
+            x: 0,
+            y: 0
+          }}
+          animate={{ 
+            opacity: 0,
+            scale: 0,
+            x: particle.x,
+            y: particle.y,
+          }}
+          transition={{ 
+            duration: 1,
+            ease: "easeOut"
+          }}
+          style={{
+            left: "50%",
+            top: "50%",
+          }}
+        />
+      ))}
+      <span className="relative z-10">{displayedText}</span>
+      <motion.span
+        className="inline-block w-[2px] h-[1em] bg-primary ml-[2px] relative top-[2px]"
+        animate={{ opacity: [1, 0] }}
+        transition={{ duration: 0.5, repeat: Infinity, repeatType: "reverse" }}
+      />
+    </div>
+  );
+};
 
 export const Hero = () => {
   const scrollToSection = (sectionId: string) => {
@@ -13,14 +84,14 @@ export const Hero = () => {
     if (!containerRef.current) return;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, containerRef.current.clientWidth / containerRef.current.clientHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ alpha: true });
     
-    renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+    renderer.setSize(window.innerWidth, window.innerHeight);
     containerRef.current.appendChild(renderer.domElement);
 
     // Create the torus knot
-    const geometry = new THREE.TorusKnotGeometry(10, 3, 100, 16);
+    const geometry = new THREE.TorusKnotGeometry(10, 3, 100,16);
     const material = new THREE.MeshPhongMaterial({ 
       color: 0x9B6BF3,
       wireframe: true
@@ -106,10 +177,9 @@ export const Hero = () => {
     animate();
 
     const handleResize = () => {
-      if (!containerRef.current) return;
-      camera.aspect = containerRef.current.clientWidth / containerRef.current.clientHeight;
+      camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
-      renderer.setSize(containerRef.current.clientWidth, containerRef.current.clientHeight);
+      renderer.setSize(window.innerWidth, window.innerHeight);
     };
 
     window.addEventListener('resize', handleResize);
@@ -121,20 +191,68 @@ export const Hero = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden" id='hero'>
-      <div ref={containerRef} className="absolute inset-0 z-0" />
+    <div className="relative min-h-screen flex items-center justify-center" id='hero'>
+      <div ref={containerRef} className="fixed inset-0 -z-10" />
       <div className="relative z-10 text-center p-8">
-        <h1 className="text-6xl font-bold mb-6 animate-fade-in">
-          Jahidul Hassan Reshad
-          <span className="text-primary block mt-2">Software Engineer</span>
-        </h1>
-        <p className="text-xl mb-8 text-muted-foreground max-w-2xl mx-auto">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          <motion.h1 
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{
+              duration: 0.8,
+              delay: 0.5,
+              ease: [0, 0.71, 0.2, 1.01]
+            }}
+          >
+            <motion.div
+              className="inline-block text-3xl md:text-4xl lg:text-5xl"
+            >
+              <TypewriterText text="Jahidul Hassan Reshad" />
+            </motion.div>
+            <motion.span 
+              className="text-primary block mt-2 text-2xl md:text-3xl lg:text-4xl"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 3.5 }}
+            >
+              Software Engineer
+            </motion.span>
+          </motion.h1>
+        </motion.div>
+        
+        <motion.p 
+          className="text-xl mb-8 text-muted-foreground max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 4 }}
+        >
           Specialized in React.js, Django, Python, and REST Framework. Building the future through code and education.
-        </p>
-        <div className="flex gap-4 justify-center">
-          <Button size="lg" onClick={() => scrollToSection("projects")} >View Projects</Button>
-          <Button size="lg" onClick={() => scrollToSection("contact")} variant="outline">Contact Me</Button>
-        </div>
+        </motion.p>
+
+        <motion.div 
+          className="flex gap-4 justify-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 4.3 }}
+        >
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button size="lg" onClick={() => scrollToSection("projects")}>View Projects</Button>
+          </motion.div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <Button size="lg" onClick={() => scrollToSection("contact")} variant="outline">Contact Me</Button>
+          </motion.div>
+        </motion.div>
       </div>
     </div>
   );

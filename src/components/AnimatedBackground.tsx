@@ -16,7 +16,7 @@ export const AnimatedBackground = () => {
 
     // Create particles
     const particlesGeometry = new THREE.BufferGeometry();
-    const particlesCount = 5000;
+    const particlesCount = 7000;
     const posArray = new Float32Array(particlesCount * 3);
 
     for(let i = 0; i < particlesCount * 3; i++) {
@@ -50,8 +50,8 @@ export const AnimatedBackground = () => {
 
     const animate = () => {
       requestAnimationFrame(animate);
-      particlesMesh.rotation.x += 0.001;
-      particlesMesh.rotation.y += 0.001;
+      particlesMesh.rotation.x += 0.003;
+      particlesMesh.rotation.y += 0.003;
 
       // Follow mouse
       particlesMesh.rotation.x += mouseY * 0.05;
