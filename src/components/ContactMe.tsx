@@ -40,7 +40,7 @@ export const ContactMe = () => {
                 <div className="space-y-4">
                   <div className="flex items-center space-x-3">
                     <Mail className="text-primary animate-bounce" />
-                    <span>contact@example.com</span>
+                    <span>contact@jahidulhassanreshad.co</span>
                   </div>
                   <div className="flex items-center space-x-3">
                     <MessageSquare className="text-primary animate-pulse" />

@@ -11,7 +11,7 @@ export const Navbar = () => {
     <nav className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
-          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          <div className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent" onClick={() => scrollToSection("hero")}>
             Jahidul Hassan Reshad
           </div>
           <div className="hidden md:flex space-x-4">

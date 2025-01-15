@@ -9,16 +9,16 @@ export const Footer = () => {
           <div>
             <h3 className="text-xl font-bold mb-4">Get in Touch</h3>
             <div className="flex space-x-4">
-              <Button size="icon" variant="ghost">
+              <Button size="icon" variant="ghost" onClick={() => window.open('https://github.com/reshadMajumder', '_blank')}>
                 <Github className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost">
+              <Button size="icon" variant="ghost" onClick={() => window.open('https://www.linkedin.com/in/your-linkedin-username', '_blank')}>
                 <Linkedin className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost">
+              <Button size="icon" variant="ghost" onClick={() => window.open('https://twitter.com/your-twitter-username', '_blank')}>
                 <Twitter className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost">
+              <Button size="icon" variant="ghost" onClick={() => window.open('mailto:your-email@example.com')}>
                 <Mail className="h-5 w-5" />
               </Button>
             </div>
