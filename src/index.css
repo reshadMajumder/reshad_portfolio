@@ -1,0 +1,109 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --primary: 251 73% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 100% 56%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 223 47% 21%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+    --border: 216 34% 17%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222 47% 11%;
+    --foreground: 213 31% 91%;
+    --primary: 251 73% 63%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 210 100% 56%;
+    --secondary-foreground: 0 0% 100%;
+    --accent: 262 83% 58%;
+    --accent-foreground: 0 0% 100%;
+    --muted: 223 47% 21%;
+    --muted-foreground: 215.4 16.3% 56.9%;
+    --border: 216 34% 17%;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .glass-card {
+    @apply bg-opacity-10 bg-white backdrop-blur-lg border border-white/10 rounded-xl;
+  }
+
+  .section-title {
+    @apply text-4xl font-bold mb-8 text-center;
+    background: linear-gradient(to right, #1E90FF, #9B6BF3);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-scale {
+    animation: scale 0.5s ease-out forwards;
+  }
+
+  @keyframes scale {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-in {
+    animation: slideIn 0.8s ease-out forwards;
+  }
+
+  @keyframes slideIn {
+    from {
+      transform: translateX(-100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
