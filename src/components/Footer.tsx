@@ -12,13 +12,13 @@ export const Footer = () => {
               <Button size="icon" variant="ghost" onClick={() => window.open('https://github.com/reshadMajumder', '_blank')}>
                 <Github className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" onClick={() => window.open('https://www.linkedin.com/in/your-linkedin-username', '_blank')}>
+              <Button size="icon" variant="ghost" onClick={() => window.open('https://www.linkedin.com/in/reshadmajumder', '_blank')}>
                 <Linkedin className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" onClick={() => window.open('https://twitter.com/your-twitter-username', '_blank')}>
+              <Button size="icon" variant="ghost" onClick={() => window.open('https://twitter.com/reshadmajumder', '_blank')}>
                 <Twitter className="h-5 w-5" />
               </Button>
-              <Button size="icon" variant="ghost" onClick={() => window.open('mailto:your-email@example.com')}>
+              <Button size="icon" variant="ghost" onClick={() => window.open('mailto:contact@jahidulhassanreshad.co')}>
                 <Mail className="h-5 w-5" />
               </Button>
             </div>

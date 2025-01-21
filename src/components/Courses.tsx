@@ -1,35 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { toast } from './ui/use-toast';
+import { BASE_URL } from '../services/Api';
 
 export const Courses = () => {
   const [email, setEmail] = useState('');
-  
-  const courses = [
-    {
-      title: "React.js Mastery",
-      description: "Master React.js from basics to advanced concepts",
-      price: ' free',
-      duration: "8 weeks",
-      active: false // Default value set to inactive
-    },
-    {
-      title: "Django Web Development",
-      description: "Build full-stack applications with Django",
-      price: ' free',
-      duration: "10 weeks",
-      active: false // Default value set to inactive
-    },
-    {
-      title: "REST API Development",
-      description: "Create robust APIs with Django REST Framework",
-      price: ' free',
-      duration: "6 weeks",
-      active: false // Default value set to inactive
-    }
-  ];
+  const [courses, setCourses] = useState([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/api/courses/`);
+        const data = await response.json();
+        setCourses(data);
+      } catch (error) {
+        toast({
+          title: "Error",
+          description: "Failed to load courses. Please try again later.",
+          variant: "destructive"
+        });
+      }
+    };
+
+    fetchCourses();
+  }, []);
 
   const handleRegistration = (courseTitle: string) => {
     if (!email) {

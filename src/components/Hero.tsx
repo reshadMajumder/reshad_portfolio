@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { Button } from './ui/button';
 import { motion, useAnimationControls } from 'framer-motion';
-
+import { BASE_URL } from '../services/Api';
 const TypewriterText = ({ text }: { text: string }) => {
   const controls = useAnimationControls();
   const [displayedText, setDisplayedText] = useState("");
@@ -74,11 +74,22 @@ const TypewriterText = ({ text }: { text: string }) => {
 };
 
 export const Hero = () => {
+  const [heroData, setHeroData] = useState(null);
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     element?.scrollIntoView({ behavior: "smooth" });
   };
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const fetchHeroData = async () => {
+      const response = await fetch(`${BASE_URL}/api/hero/`);
+      const data = await response.json();
+      setHeroData(data);
+    };
+
+    fetchHeroData();
+  }, []);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -212,7 +223,7 @@ export const Hero = () => {
             <motion.div
               className="inline-block text-3xl md:text-4xl lg:text-5xl"
             >
-              <TypewriterText text="Jahidul Hassan Reshad" />
+              {heroData ? <TypewriterText text={heroData[0].Title} /> : <TypewriterText text="Loading..." />}
             </motion.div>
             <motion.span 
               className="text-primary block mt-2 text-2xl md:text-3xl lg:text-4xl"
@@ -220,7 +231,7 @@ export const Hero = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, delay: 3.5 }}
             >
-              Software Engineer
+              {heroData ? heroData[0].Designation : "Loading..."}
             </motion.span>
           </motion.h1>
         </motion.div>
@@ -231,7 +242,7 @@ export const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 4 }}
         >
-          Specialized in React.js, Django, Python, and REST Framework. Building the future through code and education.
+          {heroData ? heroData[0].Description : "Loading..."}
         </motion.p>
 
         <motion.div 

@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react';
-
-const images = [
-  '/portfolio/image1.JPG',
-  '/portfolio/image2.JPG',
-  '/portfolio/image3.JPG',
-  '/portfolio/image4.JPG',
-  '/portfolio/image1.JPG',
-  '/portfolio/image2.JPG',
-
- 
-];
+import { BASE_URL } from '../services/Api';
 
 export const ImageCarousel3D = () => {
+  const [images, setImages] = useState<string[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const response = await fetch(`${BASE_URL}/api/about/`);
+      const data = await response.json();
+      const imageUrls = data.images.map((image: { image: string }) => `${BASE_URL}${image.image}`);
+      setImages(imageUrls);
+    };
+
+    fetchImages();
+  }, []);
 
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % images.length);
@@ -25,7 +27,7 @@ export const ImageCarousel3D = () => {
   useEffect(() => {
     const timer = setInterval(nextSlide, 4000);
     return () => clearInterval(timer);
-  }, []);
+  }, [images]);
 
   return (
     <div className="relative h-[400px] w-full overflow-hidden">
