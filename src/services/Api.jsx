@@ -1,4 +1,4 @@
 
-export const BASE_URL = 'https://reshad.tpopulargeneralhospitalpvt.com';
+export const BASE_URL = 'https://rexhad.co';
 
  
